@@ -3,6 +3,7 @@ import os
 import time
 import numpy as np
 import requests
+import json
 from flask import Flask, render_template, Response
 from edge_impulse_linux.image import ImageImpulseRunner
 
