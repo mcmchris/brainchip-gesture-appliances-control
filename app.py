@@ -41,6 +41,10 @@ def gen_frames():  # generate frame by frame from camera
     LIGHTcount = 0 
     OTHERcount = 0
 
+    lightStat = 0
+    acStat = 0
+    tvStat = 0
+
     while True:
         
         with ImageImpulseRunner(modelfile) as runner:
@@ -79,19 +83,27 @@ def gen_frames():  # generate frame by frame from camera
                             if label == "light" and score > 0.9:
                                 LIGHTcount = LIGHTcount + 1 
                                 if LIGHTcount > 3:
-                                    print("Creo que es light")
-                                    x = requests.post(url, data=json.dumps({"command":"turn on the purifier"}), headers=headers)
-                                    print(x.text)
+                                    print("You are pointing the Lightbulb")
+                                    lightStat = not(lightStat)
+                                    if lightStat == 1:
+                                        x = requests.post(url, data=json.dumps({"command":"turn on the purifier"}), headers=headers)
+                                    elif lightStat == 0:
+                                        x = requests.post(url, data=json.dumps({"command":"turn off the purifier"}), headers=headers)
+                                    print(x)
                                     LIGHTcount = 0
                             if label == "ac" and score > 0.9:
                                 ACcount = ACcount + 1
                                 if ACcount > 3:
-                                    print("Creo que es ac")
+                                    print("You are pointing the Air Conditioner")
+                                    x = requests.post(url, data=json.dumps({"command":"turn on the kitchen light"}), headers=headers)
+                                    print(x)
                                     ACcount = 0
                             if label == "tv" and score > 0.9:
                                 TVcount = TVcount + 1
                                 if TVcount > 3:
-                                    print("Creo que es tv")
+                                    print("You are pointing the TV")
+                                    x = requests.post(url, data=json.dumps({"command":"turn on the purifier"}), headers=headers)
+                                    print(x)
                                     TVcount = 0
                             if label == "other" and score > 0.9:
                                 OTHERcount = OTHERcount + 1
