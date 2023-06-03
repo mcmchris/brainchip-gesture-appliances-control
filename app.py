@@ -11,7 +11,11 @@ runner = None
 countPeople = 0
 inferenceSpeed = 0
 videoCaptureDeviceId = int(0) # use 0 for web camera
-    
+ACcount = 0
+TVcount = 0
+LIGHTcount = 0 
+OTHERcount = 0
+
 def now():
     return round(time.time() * 1000)
 
@@ -58,11 +62,24 @@ def gen_frames():  # generate frame by frame from camera
                         for label in labels:
                             score = res['result']['classification'][label]
                             if label == "light" and score > 0.9:
-                                print("Creo que es light")
+                                LIGHTcount = LIGHTcount + 1 
+                                if LIGHTcount > 3:
+                                    print("Creo que es light")
                             if label == "ac" and score > 0.9:
-                                print("Creo que es ac")
+                                ACcount = ACcount + 1
+                                if ACcount > 3:
+                                    print("Creo que es ac")
                             if label == "tv" and score > 0.9:
-                                print("Creo que es tv")
+                                TVcount = TVcount + 1
+                                if TVcount > 3:
+                                    print("Creo que es tv")
+                            if label == "other" and score > 0.9:
+                                OTHERcount = OTHERcount + 1
+                                if OTHERcount > 3:
+                                    LIGHTcount = 0
+                                    ACcount = 0
+                                    TVcount = 0
+                                
 
                             #print('%s: %.2f\t' % (label, score), end='')
                         #print('', flush=True)
