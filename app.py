@@ -67,14 +67,17 @@ def gen_frames():  # generate frame by frame from camera
                                 LIGHTcount = LIGHTcount + 1 
                                 if LIGHTcount > 3:
                                     print("Creo que es light")
+                                    LIGHTcount = 0
                             if label == "ac" and score > 0.9:
                                 ACcount = ACcount + 1
                                 if ACcount > 3:
                                     print("Creo que es ac")
+                                    ACcount = 0
                             if label == "tv" and score > 0.9:
                                 TVcount = TVcount + 1
                                 if TVcount > 3:
                                     print("Creo que es tv")
+                                    TVcount = 0
                             if label == "other" and score > 0.9:
                                 OTHERcount = OTHERcount + 1
                                 if OTHERcount > 3:
