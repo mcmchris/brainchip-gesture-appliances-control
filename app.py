@@ -35,14 +35,13 @@ def gen_frames():  # generate frame by frame from camera
     auth = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwNTA2N2M1YjVkMmY0NTIxOGQ2ZjM1ZDZlMmI3OGEwNCIsImlhdCI6MTYyNDkyODA2NCwiZXhwIjoxOTQwMjg4MDY0fQ.jRSQWYe3LpkZO_4No_RWnNhWvX73jpoS6_r91-nEjLU'
 
     payload = {
-        "Host": "homeassistant.local:8123",
-        "Connection": "keep-alive",
         "command":"prende el purificador",
+    }
+
+    headers = {    
         "Content-Type": "application/json",
         "authorization": auth
     }
-
-    headers = {}
 
     while True:
         
@@ -83,10 +82,10 @@ def gen_frames():  # generate frame by frame from camera
                                 LIGHTcount = LIGHTcount + 1 
                                 if LIGHTcount > 3:
                                     print("Creo que es light")
-                                    print(data=json.dumps(payload))
+                                    
                                     #use the 'headers' parameter to set the HTTP headers:
-                                    #x = requests.post(url, data=json.dumps(payload), headers=headers)
-                                    #print(x.text)
+                                    x = requests.post(url, data=json.dumps(payload), headers=headers)
+                                    print(x.text)
                                     LIGHTcount = 0
                             if label == "ac" and score > 0.9:
                                 ACcount = ACcount + 1
