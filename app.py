@@ -11,10 +11,7 @@ runner = None
 countPeople = 0
 inferenceSpeed = 0
 videoCaptureDeviceId = int(0) # use 0 for web camera
-ACcount = 0
-TVcount = 0
-LIGHTcount = 0 
-OTHERcount = 0
+
 
 def now():
     return round(time.time() * 1000)
@@ -25,6 +22,11 @@ def gen_frames():  # generate frame by frame from camera
     print('MODEL: ' + modelfile)
     global countPeople
     global inferenceSpeed
+
+    ACcount = 0
+    TVcount = 0
+    LIGHTcount = 0 
+    OTHERcount = 0
 
     while True:
         
@@ -79,6 +81,7 @@ def gen_frames():  # generate frame by frame from camera
                                     LIGHTcount = 0
                                     ACcount = 0
                                     TVcount = 0
+                                    OTHERcount = 0
                                 
 
                             #print('%s: %.2f\t' % (label, score), end='')
