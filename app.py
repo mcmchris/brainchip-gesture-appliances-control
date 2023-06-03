@@ -29,9 +29,10 @@ def gen_frames():  # generate frame by frame from camera
                 model_info = runner.init()
                 print('Loaded runner for "' + model_info['project']['owner'] + ' / ' + model_info['project']['name'] + '"')
                 labels = model_info['model_parameters']['labels']
-
+                
                 camera = cv2.VideoCapture(videoCaptureDeviceId)
                 ret = camera.read()[0]
+                ret = cv2.cvtColor(ret, cv2.COLOR_RGB2BGR)
                 if ret:
                     backendName = "dummy" #backendName = camera.getBackendName() this is fixed in opencv-python==4.5.2.52
                     w = camera.get(3)
