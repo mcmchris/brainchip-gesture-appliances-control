@@ -81,7 +81,7 @@ def gen_frames():  # generate frame by frame from camera
 
 def get_inference_speed():
     while True:
-        print(inferenceSpeed)
+        # print(inferenceSpeed)
         yield "data:" + str(inferenceSpeed) + "\n\n"
         time.sleep(0.1)
 
