@@ -68,9 +68,9 @@ def gen_frames():  # generate frame by frame from camera
                             # print('\t%s (%.2f): x=%d y=%d w=%d h=%d' % (bb['label'], bb['value'], bb['x'], bb['y'], bb['width'], bb['height']))
                             img = cv2.rectangle(img, (bb['x'], bb['y']), (bb['x'] + bb['width'], bb['y'] + bb['height']), (0, 0, 255), 2)
                         
-                    #ret, buffer = cv2.imencode('.jpg', img)
-                    buffer = cv2.cvtColor(ret, cv2.COLOR_BGR2GRAY)
-                    frame = ret.tobytes()
+                    ret, buffer = cv2.imencode('.jpg', img)
+                    #buffer = cv2.cvtColor(ret, cv2.COLOR_BGR2GRAY)
+                    frame = buffer.tobytes()
                     yield (b'--frame\r\n'
                         b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
 
