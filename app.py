@@ -45,6 +45,8 @@ def gen_frames():  # generate frame by frame from camera
     acStat = 0
     tvStat = 0
 
+    rptCtrl = 0
+
     while True:
         
         with ImageImpulseRunner(modelfile) as runner:
@@ -82,7 +84,8 @@ def gen_frames():  # generate frame by frame from camera
                             score = res['result']['classification'][label]
                             if label == "light" and score > 0.9:
                                 LIGHTcount = LIGHTcount + 1 
-                                if LIGHTcount > 2:
+                                if LIGHTcount > 2 and rptCtrl == 1:
+                                    rptCtrl = 0
                                     print("You are pointing the Lightbulb")
                                     lightStat = not(lightStat)
                                     if lightStat == 1:
@@ -94,7 +97,8 @@ def gen_frames():  # generate frame by frame from camera
                                     LIGHTcount = 0
                             if label == "ac" and score > 0.9:
                                 ACcount = ACcount + 1
-                                if ACcount > 2:
+                                if ACcount > 2 and rptCtrl == 1:
+                                    rptCtrl = 0
                                     print("You are pointing the Air Conditioner")
                                     acStat = not(acStat)
                                     if acStat == 1:
@@ -106,7 +110,8 @@ def gen_frames():  # generate frame by frame from camera
                                     ACcount = 0
                             if label == "tv" and score > 0.9:
                                 TVcount = TVcount + 1
-                                if TVcount > 2:
+                                if TVcount > 2 and rptCtrl == 1:
+                                    rptCtrl = 0
                                     print("You are pointing the TV")
                                     tvStat = not(tvStat)
                                     if tvStat == 1:
@@ -120,6 +125,7 @@ def gen_frames():  # generate frame by frame from camera
                             if label == "other" and score > 0.9:
                                 OTHERcount = OTHERcount + 1
                                 if OTHERcount > 2:
+                                    rptCtrl = 1
                                     LIGHTcount = 0
                                     ACcount = 0
                                     TVcount = 0
