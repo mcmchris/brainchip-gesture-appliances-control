@@ -54,11 +54,11 @@ def gen_frames():  # generate frame by frame from camera
 
                     if "classification" in res["result"].keys():
                         inferenceSpeed =  res['timing']['dsp'] + res['timing']['classification']
-                        print('Result (%d ms.) ' % (res['timing']['dsp'] + res['timing']['classification']), end='')
+                        #print('Result (%d ms.) ' % (res['timing']['dsp'] + res['timing']['classification']), end='')
                         for label in labels:
                             score = res['result']['classification'][label]
-                            print('%s: %.2f\t' % (label, score), end='')
-                        print('', flush=True)
+                            #print('%s: %.2f\t' % (label, score), end='')
+                        #print('', flush=True)
 
                     elif "bounding_boxes" in res["result"].keys():
                         # print('Found %d bounding boxes (%d ms.)' % (len(res["result"]["bounding_boxes"]), res['timing']['dsp'] + res['timing']['classification']))
@@ -75,6 +75,13 @@ def gen_frames():  # generate frame by frame from camera
                         b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
 
                     next_frame = now() + 100
+
+                    if label == "light" and score > 0.9:
+                        print("Creo que es light")
+                    if label == "ac" and score > 0.9:
+                        print("Creo que es ac")
+                    if label == "tv" and score > 0.9:
+                        print("Creo que es tv")
                     
             finally:
                 if (runner):
