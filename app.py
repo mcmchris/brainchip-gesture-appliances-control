@@ -52,6 +52,7 @@ def gen_frames():  # generate frame by frame from camera
                     # print('classification runner response', res)
 
                     if "classification" in res["result"].keys():
+                        inferenceSpeed = res['timing']['classification']
                         print('Result (%d ms.) ' % (res['timing']['dsp'] + res['timing']['classification']), end='')
                         for label in labels:
                             score = res['result']['classification'][label]
@@ -61,7 +62,7 @@ def gen_frames():  # generate frame by frame from camera
                     elif "bounding_boxes" in res["result"].keys():
                         # print('Found %d bounding boxes (%d ms.)' % (len(res["result"]["bounding_boxes"]), res['timing']['dsp'] + res['timing']['classification']))
                         countPeople = len(res["result"]["bounding_boxes"])
-                        inferenceSpeed = res['timing']['classification']
+                        # inferenceSpeed = res['timing']['classification']
                         for bb in res["result"]["bounding_boxes"]:
                             # print('\t%s (%.2f): x=%d y=%d w=%d h=%d' % (bb['label'], bb['value'], bb['x'], bb['y'], bb['width'], bb['height']))
                             img = cv2.rectangle(img, (bb['x'], bb['y']), (bb['x'] + bb['width'], bb['y'] + bb['height']), (0, 0, 255), 2)
@@ -110,4 +111,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0,0,0,0", debug=True)
