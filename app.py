@@ -80,9 +80,7 @@ def gen_frames():  # generate frame by frame from camera
                                 LIGHTcount = LIGHTcount + 1 
                                 if LIGHTcount > 3:
                                     print("Creo que es light")
-                                    
-                                    #use the 'headers' parameter to set the HTTP headers:
-                                    x = requests.post(url, data=json.dumps(payload), headers=headers)
+                                    x = requests.post(url, data=json.dumps({"command":"turn on the purifier"}), headers=headers)
                                     print(x.text)
                                     LIGHTcount = 0
                             if label == "ac" and score > 0.9:
