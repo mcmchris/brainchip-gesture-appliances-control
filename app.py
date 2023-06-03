@@ -96,7 +96,11 @@ def gen_frames():  # generate frame by frame from camera
                                 ACcount = ACcount + 1
                                 if ACcount > 2:
                                     print("You are pointing the Air Conditioner")
-                                    x = requests.post(url, data=json.dumps({"command":"turn on the kitchen light"}), headers=headers)
+                                    acStat = not(acStat)
+                                    if acStat == 1:
+                                        x = requests.post(url, data=json.dumps({"command":"turn on the kitchen light"}), headers=headers)
+                                    elif acStat == 0:
+                                        x = requests.post(url, data=json.dumps({"command":"turn off the kitchen light"}), headers=headers)
                                     if x.status_code == 200:
                                         print('AC controlled successfully')
                                     ACcount = 0
@@ -104,7 +108,11 @@ def gen_frames():  # generate frame by frame from camera
                                 TVcount = TVcount + 1
                                 if TVcount > 2:
                                     print("You are pointing the TV")
-                                    x = requests.post(url, data=json.dumps({"command":"turn on the purifier"}), headers=headers)
+                                    tvStat = not(tvStat)
+                                    if tvStat == 1:
+                                        x = requests.post(url, data=json.dumps({"command":"turn on the entrance light"}), headers=headers)
+                                    elif tvStat == 0:
+                                        x = requests.post(url, data=json.dumps({"command":"turn off the entrance light"}), headers=headers)
                                     if x.status_code == 200:
                                         print('TV controlled successfully')
                                     print(x)
