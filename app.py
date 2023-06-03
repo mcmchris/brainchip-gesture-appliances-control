@@ -52,7 +52,7 @@ def gen_frames():  # generate frame by frame from camera
                     # print('classification runner response', res)
 
                     if "classification" in res["result"].keys():
-                        inferenceSpeed = res['timing']['classification']
+                        inferenceSpeed =  res['timing']['dsp'] + res['timing']['classification']
                         print('Result (%d ms.) ' % (res['timing']['dsp'] + res['timing']['classification']), end='')
                         for label in labels:
                             score = res['result']['classification'][label]
@@ -81,7 +81,7 @@ def gen_frames():  # generate frame by frame from camera
 
 def get_inference_speed():
     while True:
-        # print(inferenceSpeed)
+        print(inferenceSpeed)
         yield "data:" + str(inferenceSpeed) + "\n\n"
         time.sleep(0.1)
 
