@@ -32,7 +32,7 @@ def gen_frames():  # generate frame by frame from camera
                 
                 camera = cv2.VideoCapture(videoCaptureDeviceId)
                 ret = camera.read()[0]
-                ret = cv2.cvtColor(ret, cv2.COLOR_RGB2BGR)
+                
                 if ret:
                     backendName = "dummy" #backendName = camera.getBackendName() this is fixed in opencv-python==4.5.2.52
                     w = camera.get(3)
@@ -69,6 +69,7 @@ def gen_frames():  # generate frame by frame from camera
                             img = cv2.rectangle(img, (bb['x'], bb['y']), (bb['x'] + bb['width'], bb['y'] + bb['height']), (0, 0, 255), 2)
                         
                     ret, buffer = cv2.imencode('.jpg', img)
+                    buffer = cv2.cvtColor(ret, cv2.COLOR_RGB2BGR)
                     frame = buffer.tobytes()
                     yield (b'--frame\r\n'
                         b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
