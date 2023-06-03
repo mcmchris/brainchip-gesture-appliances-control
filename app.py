@@ -82,32 +82,36 @@ def gen_frames():  # generate frame by frame from camera
                             score = res['result']['classification'][label]
                             if label == "light" and score > 0.9:
                                 LIGHTcount = LIGHTcount + 1 
-                                if LIGHTcount > 3:
+                                if LIGHTcount > 2:
                                     print("You are pointing the Lightbulb")
                                     lightStat = not(lightStat)
                                     if lightStat == 1:
                                         x = requests.post(url, data=json.dumps({"command":"turn on the purifier"}), headers=headers)
                                     elif lightStat == 0:
                                         x = requests.post(url, data=json.dumps({"command":"turn off the purifier"}), headers=headers)
-                                    print(x)
+                                    if x.status_code == 200:
+                                        print('Lightbulb controlled successfully')
                                     LIGHTcount = 0
                             if label == "ac" and score > 0.9:
                                 ACcount = ACcount + 1
-                                if ACcount > 3:
+                                if ACcount > 2:
                                     print("You are pointing the Air Conditioner")
                                     x = requests.post(url, data=json.dumps({"command":"turn on the kitchen light"}), headers=headers)
-                                    print(x)
+                                    if x.status_code == 200:
+                                        print('AC controlled successfully')
                                     ACcount = 0
                             if label == "tv" and score > 0.9:
                                 TVcount = TVcount + 1
-                                if TVcount > 3:
+                                if TVcount > 2:
                                     print("You are pointing the TV")
                                     x = requests.post(url, data=json.dumps({"command":"turn on the purifier"}), headers=headers)
+                                    if x.status_code == 200:
+                                        print('TV controlled successfully')
                                     print(x)
                                     TVcount = 0
                             if label == "other" and score > 0.9:
                                 OTHERcount = OTHERcount + 1
-                                if OTHERcount > 3:
+                                if OTHERcount > 2:
                                     LIGHTcount = 0
                                     ACcount = 0
                                     TVcount = 0
