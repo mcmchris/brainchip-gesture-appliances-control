@@ -120,7 +120,7 @@ def gen_frames():  # generate frame by frame from camera
                                         x = requests.post(url, data=json.dumps({"command":"turn off the entrance light"}), headers=headers)
                                     if x.status_code == 200:
                                         print('TV controlled successfully')
-                                    print(x)
+                                    
                                     TVcount = 0
                             if label == "other" and score > 0.9:
                                 OTHERcount = OTHERcount + 1
