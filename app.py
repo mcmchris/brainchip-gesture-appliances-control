@@ -45,6 +45,8 @@ def gen_frames():  # generate frame by frame from camera
     acStat = 0
     tvStat = 0
 
+    trustVal = 3
+
     rptCtrl = 0
 
     while True:
@@ -84,7 +86,7 @@ def gen_frames():  # generate frame by frame from camera
                             score = res['result']['classification'][label]
                             if label == "light" and score > 0.9:
                                 LIGHTcount = LIGHTcount + 1 
-                                if LIGHTcount > 2 and rptCtrl == 1:
+                                if LIGHTcount > trustVal and rptCtrl == 1:
                                     rptCtrl = 0
                                     print("You are pointing the Lightbulb")
                                     lightStat = not(lightStat)
@@ -97,7 +99,7 @@ def gen_frames():  # generate frame by frame from camera
                                     LIGHTcount = 0
                             if label == "ac" and score > 0.9:
                                 ACcount = ACcount + 1
-                                if ACcount > 2 and rptCtrl == 1:
+                                if ACcount > trustVal and rptCtrl == 1:
                                     rptCtrl = 0
                                     print("You are pointing the Air Conditioner")
                                     acStat = not(acStat)
@@ -110,7 +112,7 @@ def gen_frames():  # generate frame by frame from camera
                                     ACcount = 0
                             if label == "tv" and score > 0.9:
                                 TVcount = TVcount + 1
-                                if TVcount > 2 and rptCtrl == 1:
+                                if TVcount > trustVal and rptCtrl == 1:
                                     rptCtrl = 0
                                     print("You are pointing the TV")
                                     tvStat = not(tvStat)
