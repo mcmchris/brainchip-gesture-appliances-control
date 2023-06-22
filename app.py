@@ -36,7 +36,7 @@ def gen_frames():  # generate frame by frame from camera
     modelfile = akida.Model('./akida_model.fbz')
     devices = akida.devices()
     print(f'Available devices: {[dev.desc for dev in devices]}')
-    print('MODEL: ' + modelfile)
+    #print('MODEL: ' + modelfile)
     global countPeople
     global inferenceSpeed
 
