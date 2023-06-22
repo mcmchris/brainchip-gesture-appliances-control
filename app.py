@@ -32,7 +32,9 @@ def now():
 def gen_frames():  # generate frame by frame from camera
     dir_path = os.path.dirname(os.path.realpath(__file__))
     #modelfile = os.path.join(dir_path, 'modelfile.eim')
-    modelfile = os.path.join(dir_path, 'akida_model.fbz')
+    modelfile = akida.Model('./akida_model.fbz')
+    devices = akida.devices()
+    print(f'Available devices: {[dev.desc for dev in devices]}')
     print('MODEL: ' + modelfile)
     global countPeople
     global inferenceSpeed
