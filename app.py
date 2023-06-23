@@ -51,7 +51,7 @@ def gen_frames():  # generate frame by frame from camera
     rptCtrl = 0
 
     while True:
-        
+        #//////////////////////////////////////////////////////////////////////////////
         with ImageImpulseRunner(modelfile) as runner:
             try:
                 model_info = runner.init()
@@ -148,6 +148,9 @@ def gen_frames():  # generate frame by frame from camera
                         
                     ret, buffer = cv2.imencode('.jpg', img)
                     #buffer = cv2.cvtColor(ret, cv2.COLOR_BGR2GRAY)
+
+                    #/////////////////////////////////////////////////////////////
+
                     frame = buffer.tobytes()
                     yield (b'--frame\r\n'
                         b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
