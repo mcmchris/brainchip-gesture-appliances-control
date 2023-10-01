@@ -15,7 +15,7 @@ countPeople = 0
 inferenceSpeed = 0
 videoCaptureDeviceId = int(0) # use 0 for web camera
 
-url = 'http://10.0.0.67:8123/api/services/google_assistant_sdk/send_text_command'
+url = 'http://10.0.0.173:8123/api/services/google_assistant_sdk/send_text_command'
 auth = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwNTA2N2M1YjVkMmY0NTIxOGQ2ZjM1ZDZlMmI3OGEwNCIsImlhdCI6MTYyNDkyODA2NCwiZXhwIjoxOTQwMjg4MDY0fQ.jRSQWYe3LpkZO_4No_RWnNhWvX73jpoS6_r91-nEjLU'
 
 payload = {
