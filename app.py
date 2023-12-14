@@ -12,7 +12,7 @@ app = Flask(__name__, static_folder='templates/assets')
 runner = None
 countPeople = 0
 inferenceSpeed = 0
-videoCaptureDeviceId = int(0) # use 0 for web camera
+videoCaptureDeviceId = int(2) # use 0 for web camera
 
 url = 'http://10.0.0.173:8123/api/services/google_assistant_sdk/send_text_command'
 auth = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwNTA2N2M1YjVkMmY0NTIxOGQ2ZjM1ZDZlMmI3OGEwNCIsImlhdCI6MTYyNDkyODA2NCwiZXhwIjoxOTQwMjg4MDY0fQ.jRSQWYe3LpkZO_4No_RWnNhWvX73jpoS6_r91-nEjLU'
@@ -58,7 +58,7 @@ def gen_frames():  # generate frame by frame from camera
                 labels = model_info['model_parameters']['labels']
                 
                 camera = cv2.VideoCapture(videoCaptureDeviceId)
-                ret = camera.read()[2]
+                ret = camera.read()[0]
                 
                 if ret:
                     backendName = "dummy" #backendName = camera.getBackendName() this is fixed in opencv-python==4.5.2.52
