@@ -58,7 +58,7 @@ def gen_frames():  # generate frame by frame from camera
                 labels = model_info['model_parameters']['labels']
                 
                 camera = cv2.VideoCapture(videoCaptureDeviceId)
-                ret = camera.read()[0]
+                ret = camera.read()[2]
                 
                 if ret:
                     backendName = "dummy" #backendName = camera.getBackendName() this is fixed in opencv-python==4.5.2.52
