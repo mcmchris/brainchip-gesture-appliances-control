@@ -18,9 +18,9 @@ from picamera2 import Picamera2
 from edge_impulse_linux.image import ImageImpulseRunner
 
 # Settings
-model_file = "modelfile.eim"             # Trained ML model from Edge Impulse
-res_width = 96                          # Resolution of camera (width)
-res_height = 96                         # Resolution of camera (height)
+model_file = "model.eim"             # Trained ML model from Edge Impulse
+res_width = 192                          # Resolution of camera (width)
+res_height = 192                         # Resolution of camera (height)
 rotation = 0                            # Camera rotation (0, 90, 180, or 270)
 cam_format = "RGB888"                   # Color format
 
