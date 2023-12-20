@@ -107,23 +107,7 @@ with Picamera2() as camera:
 
         # For viewing, convert image to grayscale
         img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-        
-        # Draw max label on preview window
-        #cv2.putText(img,
-                    max_label,
-                    (0, 12),
-                    cv2.FONT_HERSHEY_PLAIN,
-                    1,
-                    (255, 255, 255))
-                    
-        # Draw max probability on preview window
-        #cv2.putText(img,
-                    str(round(results[max_label], 2)),
-                    (0, 24),
-                    cv2.FONT_HERSHEY_PLAIN,
-                    1,
-                    (255, 255, 255))
-        
+               
         # Show the frame
         #cv2.imshow("Frame", img)
         
