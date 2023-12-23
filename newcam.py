@@ -15,7 +15,12 @@ License: Apache-2.0 (apache.org/licenses/LICENSE-2.0)
 import os, sys, time
 import cv2
 from picamera2 import Picamera2
+import requests
+import json
+from flask import Flask, render_template, Response
 from edge_impulse_linux.image import ImageImpulseRunner
+
+app = Flask(__name__, static_folder='templates/assets')
 
 # Settings
 model_file = "model.eim"             # Trained ML model from Edge Impulse
@@ -108,16 +113,31 @@ with Picamera2() as camera:
         # For viewing, convert image to grayscale
         img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
                
+        frame = img.tobytes()
+        stream = (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
+
         # Show the frame
         #cv2.imshow("Frame", img)
         
-        # Calculate framrate
+        # Calculate framerate
         frame_time = (cv2.getTickCount() - timestamp) / cv2.getTickFrequency()
         fps = 1 / frame_time
         
         # Press 'q' to quit
         if cv2.waitKey(1) == ord('q'):
-            break
-        
+            break        
 # Clean up
 cv2.destroyAllWindows()
+
+@app.route('/video_feed')
+def video_feed():
+    #Video streaming route. Put this in the src attribute of an img tag
+    return Response(stream, mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", debug=True)
