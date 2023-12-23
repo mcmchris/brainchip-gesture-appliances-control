@@ -38,101 +38,101 @@ model_path = os.path.join(dir_path, model_file)
 # Load the model file
 runner = ImageImpulseRunner(model_path)
 
-# Initialize model (and print information if it loads)
-try:
-    model_info = runner.init()
-    print("Model name:", model_info['project']['name'])
-    print("Model owner:", model_info['project']['owner'])
-    
-# Exit if we cannot initialize the model
-except Exception as e:
-    print("ERROR: Could not initialize model")
-    print("Exception:", e)
-    if (runner):
-            runner.stop()
-    sys.exit(1)
-
-# Initial framerate value
-fps = 0
-
-# Interface with camera
-with Picamera2() as camera:
-
-    
-    # Configure camera settings
-    config = camera.create_video_configuration(
-        main={"size": (res_width, res_height), "format": cam_format})
-    camera.configure(config)
-
-    # Start camera
-    camera.start()
-    
-    # Continuously capture frames
-    while True:
-                                            
-        # Get timestamp for calculating actual framerate
-        timestamp = cv2.getTickCount()
+def gen_frames():
+    # Initialize model (and print information if it loads)
+    try:
+        model_info = runner.init()
+        print("Model name:", model_info['project']['name'])
+        print("Model owner:", model_info['project']['owner'])
         
-        # Get array that represents the image (in RGB format)
-        img = camera.capture_array()
+    # Exit if we cannot initialize the model
+    except Exception as e:
+        print("ERROR: Could not initialize model")
+        print("Exception:", e)
+        if (runner):
+                runner.stop()
+        sys.exit(1)
 
-        # Rotate image
-        if rotation == 0:
-            pass
-        elif rotation == 90:
-            img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
-        elif rotation == 180:
-            img = cv2.rotate(img, cv2.ROTATE_180)
-        elif rotation == 270:
-            img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
-        else:
-            print("ERROR: rotation not supported. Must be 0, 90, 180, or 270.")
-            break
+    # Initial framerate value
+    fps = 0
+
+    # Interface with camera
+    with Picamera2() as camera:
+
+        # Configure camera settings
+        config = camera.create_video_configuration(
+            main={"size": (res_width, res_height), "format": cam_format})
+        camera.configure(config)
+
+        # Start camera
+        camera.start()
         
-        # Extract features (e.g. grayscale image as a 2D array)
-        features, cropped = runner.get_features_from_image(img)
-        
-        # Perform inference
-        res = None
-        try:
-            res = runner.classify(features)
-        except Exception as e:
-            print("ERROR: Could not perform inference")
-            print("Exception:", e)
+        # Continuously capture frames
+        while True:
+                                                
+            # Get timestamp for calculating actual framerate
+            timestamp = cv2.getTickCount()
             
-        # Display predictions and timing data
-        print("-----")
-        results = res['result']['classification']
-        for label in results:
-            prob = results[label]
-            print(label + ": " + str(round(prob, 3)))
-        print("FPS: " + str(round(fps, 3)))
-        
-        # Find label with the highest probability
-        max_label = max(results, key=results.get)
+            # Get array that represents the image (in RGB format)
+            img = camera.capture_array()
 
-        # For viewing, convert image to grayscale
-        img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-               
-        frame = img.tobytes()
-        stream = (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
+            # Rotate image
+            if rotation == 0:
+                pass
+            elif rotation == 90:
+                img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
+            elif rotation == 180:
+                img = cv2.rotate(img, cv2.ROTATE_180)
+            elif rotation == 270:
+                img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
+            else:
+                print("ERROR: rotation not supported. Must be 0, 90, 180, or 270.")
+                break
+            
+            # Extract features (e.g. grayscale image as a 2D array)
+            features, cropped = runner.get_features_from_image(img)
+            
+            # Perform inference
+            res = None
+            try:
+                res = runner.classify(features)
+            except Exception as e:
+                print("ERROR: Could not perform inference")
+                print("Exception:", e)
+                
+            # Display predictions and timing data
+            print("-----")
+            results = res['result']['classification']
+            for label in results:
+                prob = results[label]
+                print(label + ": " + str(round(prob, 3)))
+            print("FPS: " + str(round(fps, 3)))
+            
+            # Find label with the highest probability
+            max_label = max(results, key=results.get)
 
-        # Show the frame
-        #cv2.imshow("Frame", img)
-        
-        # Calculate framerate
-        frame_time = (cv2.getTickCount() - timestamp) / cv2.getTickFrequency()
-        fps = 1 / frame_time
-        
-        # Press 'q' to quit
-        if cv2.waitKey(1) == ord('q'):
-            break        
+            # For viewing, convert image to grayscale
+            img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+                
+            frame = img.tobytes()
+            yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+            # Show the frame
+            #cv2.imshow("Frame", img)
+            
+            # Calculate framerate
+            frame_time = (cv2.getTickCount() - timestamp) / cv2.getTickFrequency()
+            fps = 1 / frame_time
+            
+            # Press 'q' to quit
+            if cv2.waitKey(1) == ord('q'):
+                break        
 
 
 @app.route('/video_feed')
 def video_feed():
     #Video streaming route. Put this in the src attribute of an img tag
-    return Response(stream, mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/')
 def index():
@@ -141,7 +141,7 @@ def index():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
-    
+
 # Clean up
 cv2.destroyAllWindows()
 
