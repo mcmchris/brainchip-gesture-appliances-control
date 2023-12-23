@@ -113,8 +113,9 @@ def gen_frames():
 
             # For viewing, convert image to grayscale
             img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-                
-            frame = img.tobytes()
+            buffer = cv2.imencode('.jpg', img)
+
+            frame = buffer.tobytes()
             yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
             # Show the frame
@@ -137,7 +138,6 @@ def video_feed():
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
