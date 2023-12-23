@@ -127,8 +127,7 @@ with Picamera2() as camera:
         # Press 'q' to quit
         if cv2.waitKey(1) == ord('q'):
             break        
-# Clean up
-cv2.destroyAllWindows()
+
 
 @app.route('/video_feed')
 def video_feed():
@@ -142,3 +141,7 @@ def index():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
+    
+# Clean up
+cv2.destroyAllWindows()
+
