@@ -113,7 +113,7 @@ def gen_frames():
 
             # For viewing, convert image to grayscale
             img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-            buffer = cv2.imencode('.jpg', img)
+            res, buffer = cv2.imencode('.jpg', img)
 
             frame = buffer.tobytes()
             yield (b'--frame\r\n'
