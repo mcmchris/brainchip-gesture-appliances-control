@@ -27,7 +27,7 @@ app = Flask(__name__, static_folder='templates/assets')
 model_file = "model.eim"             # Trained ML model from Edge Impulse
 res_width = 192                          # Resolution of camera (width)
 res_height = 192                         # Resolution of camera (height)
-rotation = 0                            # Camera rotation (0, 90, 180, or 270)
+rotation = 180                            # Camera rotation (0, 90, 180, or 270)
 cam_format = "RGB888"                   # Color format
 
 url = 'http://10.0.0.173:8123/api/services/google_assistant_sdk/send_text_command'
