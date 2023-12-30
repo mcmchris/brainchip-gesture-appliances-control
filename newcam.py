@@ -141,40 +141,40 @@ def gen_frames():
                         if x.status_code == 200:
                             print('Lightbulb controlled successfully')
                         LIGHTcount = 0
-                    if label == "ac" and prob > 0.9:
-                        ACcount = ACcount + 1
-                        if ACcount > trustVal and rptCtrl == 1:
-                            rptCtrl = 0
-                            print("You are pointing the Air Conditioner")
-                            acStat = not(acStat)
-                            if acStat == 1:
-                                x = requests.post(url, data=json.dumps({"command":"prende el aire de la habitacion"}), headers=headers)
-                            elif acStat == 0:
-                                x = requests.post(url, data=json.dumps({"command":"apaga el aire de la habitacion"}), headers=headers)
-                            if x.status_code == 200:
-                                print('AC controlled successfully')
-                            ACcount = 0
-                    if label == "tv" and prob > 0.9:
-                        TVcount = TVcount + 1
-                        if TVcount > trustVal and rptCtrl == 1:
-                            rptCtrl = 0
-                            print("You are pointing the TV")
-                            tvStat = not(tvStat)
-                            if tvStat == 1:
-                                x = requests.post(url, data=json.dumps({"command":"prende la television"}), headers=headers)
-                            elif tvStat == 0:
-                                x = requests.post(url, data=json.dumps({"command":"apaga la television"}), headers=headers)
-                            if x.status_code == 200:
-                                print('TV controlled successfully')
-                            TVcount = 0
-                    if label == "other" and prob > 0.9:
-                        OTHERcount = OTHERcount + 1
-                        if OTHERcount > 2:
-                            rptCtrl = 1
-                            LIGHTcount = 0
-                            ACcount = 0
-                            TVcount = 0
-                            OTHERcount = 0
+                if label == "ac" and prob > 0.9:
+                    ACcount = ACcount + 1
+                    if ACcount > trustVal and rptCtrl == 1:
+                        rptCtrl = 0
+                        print("You are pointing the Air Conditioner")
+                        acStat = not(acStat)
+                        if acStat == 1:
+                            x = requests.post(url, data=json.dumps({"command":"prende el aire de la habitacion"}), headers=headers)
+                        elif acStat == 0:
+                            x = requests.post(url, data=json.dumps({"command":"apaga el aire de la habitacion"}), headers=headers)
+                        if x.status_code == 200:
+                            print('AC controlled successfully')
+                        ACcount = 0
+                if label == "tv" and prob > 0.9:
+                    TVcount = TVcount + 1
+                    if TVcount > trustVal and rptCtrl == 1:
+                        rptCtrl = 0
+                        print("You are pointing the TV")
+                        tvStat = not(tvStat)
+                        if tvStat == 1:
+                            x = requests.post(url, data=json.dumps({"command":"prende la television"}), headers=headers)
+                        elif tvStat == 0:
+                            x = requests.post(url, data=json.dumps({"command":"apaga la television"}), headers=headers)
+                        if x.status_code == 200:
+                            print('TV controlled successfully')
+                        TVcount = 0
+                if label == "other" and prob > 0.9:
+                    OTHERcount = OTHERcount + 1
+                    if OTHERcount > 2:
+                        rptCtrl = 1
+                        LIGHTcount = 0
+                        ACcount = 0
+                        TVcount = 0
+                        OTHERcount = 0
 
             print("FPS: " + str(round(fps, 3)))
             
