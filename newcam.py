@@ -25,8 +25,8 @@ app = Flask(__name__, static_folder='templates/assets')
 
 # Settings
 model_file = "model.eim"             # Trained ML model from Edge Impulse
-res_width = 240                          # Resolution of camera (width)
-res_height = 240                         # Resolution of camera (height)
+res_width = 192                          # Resolution of camera (width)
+res_height = 192                         # Resolution of camera (height)
 rotation = 0                            # Camera rotation (0, 90, 180, or 270)
 cam_format = "RGB888"                   # Color format
 
