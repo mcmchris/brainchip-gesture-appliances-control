@@ -30,6 +30,14 @@ res_height = 192                         # Resolution of camera (height)
 rotation = 0                            # Camera rotation (0, 90, 180, or 270)
 cam_format = "RGB888"                   # Color format
 
+url = 'http://10.0.0.173:8123/api/services/google_assistant_sdk/send_text_command'
+auth = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwNTA2N2M1YjVkMmY0NTIxOGQ2ZjM1ZDZlMmI3OGEwNCIsImlhdCI6MTYyNDkyODA2NCwiZXhwIjoxOTQwMjg4MDY0fQ.jRSQWYe3LpkZO_4No_RWnNhWvX73jpoS6_r91-nEjLU'
+
+headers = {    
+    "Content-Type": "application/json",
+    "authorization": auth
+}
+
 # The ImpulseRunner module will attempt to load files relative to its location,
 # so we make it load files relative to this program instead
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -141,5 +149,5 @@ if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)
 
 # Clean up
-cv2.destroyAllWindows()
+#cv2.destroyAllWindows()
 
