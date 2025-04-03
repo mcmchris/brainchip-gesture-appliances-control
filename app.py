@@ -4,8 +4,11 @@ import time
 import numpy as np
 import requests
 import json
+from dotenv import load_dotenv
 from flask import Flask, render_template, Response
 from edge_impulse_linux.image import ImageImpulseRunner
+
+load_dotenv()
 
 app = Flask(__name__, static_folder='templates/assets')
 
@@ -15,7 +18,7 @@ inferenceSpeed = 0
 videoCaptureDeviceId = int(1) # use 0 for web camera
 
 url = 'http://10.0.0.173:8123/api/services/google_assistant_sdk/send_text_command'
-auth = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwNTA2N2M1YjVkMmY0NTIxOGQ2ZjM1ZDZlMmI3OGEwNCIsImlhdCI6MTYyNDkyODA2NCwiZXhwIjoxOTQwMjg4MDY0fQ.jRSQWYe3LpkZO_4No_RWnNhWvX73jpoS6_r91-nEjLU'
+auth = os.getenv("HOME_ASSISTANT_KEY")
 
 
 headers = {    

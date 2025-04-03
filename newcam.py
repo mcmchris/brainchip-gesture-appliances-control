@@ -18,8 +18,11 @@ from picamera2 import Picamera2
 import requests
 import json
 import numpy as np
+from dotenv import load_dotenv
 from flask import Flask, render_template, Response
 from edge_impulse_linux.image import ImageImpulseRunner
+
+load_dotenv()
 
 app = Flask(__name__, static_folder='templates/assets')
 
@@ -31,7 +34,7 @@ rotation = 180                            # Camera rotation (0, 90, 180, or 270)
 cam_format = "RGB888"                   # Color format
 
 url = 'http://10.0.0.173:8123/api/services/google_assistant_sdk/send_text_command'
-auth = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwNTA2N2M1YjVkMmY0NTIxOGQ2ZjM1ZDZlMmI3OGEwNCIsImlhdCI6MTYyNDkyODA2NCwiZXhwIjoxOTQwMjg4MDY0fQ.jRSQWYe3LpkZO_4No_RWnNhWvX73jpoS6_r91-nEjLU'
+auth = os.getenv("HOME_ASSISTANT_KEY")
 
 headers = {    
     "Content-Type": "application/json",

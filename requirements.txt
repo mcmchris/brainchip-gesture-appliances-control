@@ -5,3 +5,4 @@ PyAudio==0.2.11
 psutil>=5.8.0
 Flask
 Requests
+python-dotenv
