@@ -17,7 +17,7 @@ countPeople = 0
 inferenceSpeed = 0
 videoCaptureDeviceId = int(1) # use 0 for web camera
 
-url = 'http://10.0.0.173:8123/api/services/google_assistant_sdk/send_text_command'
+url = 'https://homeassistant.mcmchris.com/api/services/google_assistant_sdk/send_text_command'
 auth = os.getenv("HOME_ASSISTANT_KEY")
 
 
