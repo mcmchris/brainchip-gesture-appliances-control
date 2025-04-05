@@ -146,7 +146,7 @@ def gen_frames():  # generate frame by frame from camera
                             img = cv2.rectangle(img, (bb['x'], bb['y']), (bb['x'] + bb['width'], bb['y'] + bb['height']), (0, 0, 255), 2)
                         
                     ret, buffer = cv2.imencode('.jpg', img)
-                    #buffer = cv2.cvtColor(ret, cv2.COLOR_BGR2GRAY)
+                    buffer = cv2.cvtColor(ret, cv2.COLOR_BGR2RGB)
 
                     #/////////////////////////////////////////////////////////////
 
