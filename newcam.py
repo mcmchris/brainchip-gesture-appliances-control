@@ -34,7 +34,7 @@ rotation = 180                            # Camera rotation (0, 90, 180, or 270)
 cam_format = "RGB888"                   # Color format
 
 url = 'https://homeassistant.mcmchris.com/api/services/google_assistant_sdk/send_text_command'
-auth = os.getenv("HOME_ASSISTANT_KEY")
+auth = os.getenv("HOME_ASSISTANT_KEY", "hola")
 
 print(auth)
 
