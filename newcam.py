@@ -36,6 +36,8 @@ cam_format = "RGB888"                   # Color format
 url = 'https://homeassistant.mcmchris.com/api/services/google_assistant_sdk/send_text_command'
 auth = os.getenv("HOME_ASSISTANT_KEY")
 
+print(auth)
+
 headers = {    
     "Content-Type": "application/json",
     "authorization": auth
