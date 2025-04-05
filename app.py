@@ -15,7 +15,7 @@ app = Flask(__name__, static_folder='templates/assets')
 runner = None
 countPeople = 0
 inferenceSpeed = 0
-videoCaptureDeviceId = int(1) # use 0 for web camera
+videoCaptureDeviceId = int(0) # use 0 for web camera
 
 url = 'https://homeassistant.mcmchris.com/api/services/google_assistant_sdk/send_text_command'
 auth = os.getenv("HOME_ASSISTANT_KEY")
