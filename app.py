@@ -61,7 +61,7 @@ def gen_frames():  # generate frame by frame from camera
                 ret = camera.read()[0]
                 
                 if ret:
-                    backendName = "dummy" #backendName = camera.getBackendName() this is fixed in opencv-python==4.5.2.52
+                    backendName = camera.getBackendName()
                     w = camera.get(3)
                     h = camera.get(4)
                     print("Camera %s (%s x %s) in port %s selected." %(backendName,h,w, videoCaptureDeviceId))
@@ -144,9 +144,12 @@ def gen_frames():  # generate frame by frame from camera
                         for bb in res["result"]["bounding_boxes"]:
                             # print('\t%s (%.2f): x=%d y=%d w=%d h=%d' % (bb['label'], bb['value'], bb['x'], bb['y'], bb['width'], bb['height']))
                             img = cv2.rectangle(img, (bb['x'], bb['y']), (bb['x'] + bb['width'], bb['y'] + bb['height']), (0, 0, 255), 2)
-                        
-                    ret, buffer = cv2.imencode('.jpg', img)
-                    buffer = cv2.cvtColor(ret, cv2.COLOR_BGR2RGB)
+                    
+                    
+                    edited = img.astype(np.float32) / 255    # Normalize to [0,1]
+                    edited = cv2.cvtColor(ret, cv2.COLOR_BGR2RGB)
+                    ret, buffer = cv2.imencode('.jpg', edited)
+                    
 
                     #/////////////////////////////////////////////////////////////
 
